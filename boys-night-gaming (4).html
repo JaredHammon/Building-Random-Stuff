@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boys Night Gaming</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Boys Night Gaming</h1>
+    <input type="text" id="search" placeholder="Search games..." onkeyup="filterGames()">
+
+    <div id="game-list">
+        <!-- Original Game Data -->
+        <div class="game-item" data-price="30" data-rating="4.5" data-players="4" onclick="showDetails('game1')">
+            <h2>Game 1</h2>
+            <p>Price: $30, Rating: 4.5</p>
+        </div>
+        <div class="game-item" data-price="50" data-rating="5" data-players="8" onclick="showDetails('game2')">
+            <h2>Game 2</h2>
+            <p>Price: $50, Rating: 5</p>
+        </div>
+        <!-- Add more game items as necessary -->
+    </div>
+
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2 id="modal-game-title"></h2>
+            <p id="modal-game-details"></p>
+            <h3>User Reviews</h3>
+            <div id="reviews"></div>
+            <textarea id="review-input" placeholder="Add your review..."></textarea>
+            <button onclick="addReview()">Submit Review</button>
+        </div>
+    </div>
+
+    <script>
+        function showDetails(gameId) {
+            // Fetch game details and populate modal
+            const modal = document.getElementById('game-modal');
+            // Example: Change this to get real game details
+            document.getElementById('modal-game-title').innerText = gameId;
+            document.getElementById('modal-game-details').innerText = 'Details about ' + gameId;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('game-modal').style.display = 'none';
+        }
+
+        function filterGames() {
+            const input = document.getElementById('search');
+            const filter = input.value.toLowerCase();
+            const games = document.getElementsByClassName('game-item');
+            for (let i = 0; i < games.length; i++) {
+                const gameTitle = games[i].getElementsByTagName('h2')[0].innerText;
+                games[i].style.display = gameTitle.toLowerCase().includes(filter) ? '' : 'none';
+            }
+        }
+
+        function addReview() {
+            const reviewInput = document.getElementById('review-input');
+            const reviewsDiv = document.getElementById('reviews');
+            const newReview = document.createElement('p');
+            newReview.innerText = reviewInput.value;
+            reviewsDiv.appendChild(newReview);
+            reviewInput.value = '';
+        }
+    </script>
+</body>
+</html>
